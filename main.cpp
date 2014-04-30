@@ -33,7 +33,7 @@ float Test(Individu &ind, const int In1, const int In2, const float vitesse)
 	return ind.GetError();
 }
 
-int Out(Individu &ind, const int In1, const int In2)
+float Out(Individu &ind, const int In1, const int In2)
 {
 	float Hd[3];
 	float Out = 0;
@@ -47,6 +47,7 @@ int Out(Individu &ind, const int In1, const int In2)
 	}
 	
 	return (Out >= 0.5 ? 1 : 0);
+	//~ return Out;
 }
 
 int main(int argc, char *argv[])
@@ -55,7 +56,7 @@ int main(int argc, char *argv[])
 	
 	Individu ind;
 	float vitesse = 0.1;
-	int it = 0, cycle = 100000;
+	int it = 0;
 	
 	cout << "Poids de départ: " << std::endl;
 	ind.ShowWeights();
@@ -64,14 +65,6 @@ int main(int argc, char *argv[])
 	float error_sum = 1;
 	while (error_sum != 0)
 	{
-		//~ for (int i = 0; i < cycle; i++)
-		//~ {
-			//~ error_sum += Test(ind, 0, 0, vitesse);
-			//~ Test(ind, 0, 1, vitesse);
-			//~ Test(ind, 1, 0, vitesse);
-			//~ Test(ind, 1, 1, vitesse);
-		//~ }
-
 		error_sum = 0;
 		//~ error_sum += Test(ind, 0, 0, vitesse);
 		error_sum += Test(ind, 0, 1, vitesse);
@@ -79,9 +72,10 @@ int main(int argc, char *argv[])
 		error_sum += Test(ind, 1, 1, vitesse);
 		
 		it++;
+		if (it>=10000000) break;
 	}
 	
-	cout << (it-1)*cycle+cycle << " itérations" << std::endl;
+	cout << it << " itérations" << std::endl;
 	cout << "Poids d'arrivée: " << std::endl;
 	ind.ShowWeights();
 	cout << std::endl;

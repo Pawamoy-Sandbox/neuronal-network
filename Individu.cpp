@@ -51,7 +51,7 @@ float Individu::GetWoh(int i, int j)
 
 float Individu::GetError()
 {
-	return (m_error <= 0.0000001 ? 0 : m_error);
+	return (m_error <= 0.1 && m_error >= -0.1 ? 0 : m_error);
 }
 
 void Individu::ShowWeights()
