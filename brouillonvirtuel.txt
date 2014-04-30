@@ -1,0 +1,8 @@
+Individu : 6 poids in et 3 poids out
+4 épreuves à passer pour chaque Individu : 0,0 0,1 1,0 1,1
+Calcul du fitness en fonction des 2 entrées et de la sortie
+
+Questions :
+comment les poids modifient les entrées ? (multiplication ?)
+
+http://e-philo.univ-paris1.fr/TP1_CONX.htm
