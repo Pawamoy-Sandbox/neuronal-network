@@ -8,61 +8,83 @@ Individu::Individu()
 	Init();
 }
 
-Individu::Individu(float x, float y):
-m_x(x),
-m_y(y),
-m_error(0)
-{
-}
-
 Individu::~Individu()
 {
 }
 
 void Individu::Init()
-{
-	int a = 0;
-	int b = 1;
-	/* réels entre 0 et 1 */
-	m_x = (b-a)*((float)rand()/RAND_MAX) + a;
-	m_y = (b-a)*((float)rand()/RAND_MAX) + a;
+{	
+	for(int i = 0; i < 6; i++)
+	{
+		m_wih[i] = (float)rand()/RAND_MAX;
+	}
 	
-	m_error = 0;
+	for(int i = 0; i < 3; i++)
+	{
+		m_woh[i] = (float)rand()/RAND_MAX;
+	}
+	
+	m_error = 100;
 }
 
-
-Individu* Individu::Croisement(Individu *individu)
+float Individu::GetWih(int i, int j)
 {
-	/* enfant = (ind1 + ind2) / 2*/
-	return new Individu((m_x + individu->GetX()) / 2, (m_y + individu->GetY()) / 2);
+	if((i != 1 && i != 2) || (j != 1 && j != 2 && j != 3))
+	{
+		std::cout << "Erreur index GetWih" << std::endl;
+		return -1;
+	}
+	
+	return m_wih[(i-1)*3+j-1];
 }
 
-Individu* Individu::Clonage()
+float Individu::GetWoh(int i, int j)
 {
-	return new Individu(m_x, m_y);
-}
-
-void Individu::Mutation()
-{
-	if(rand() % 2) /* choix de l'allèle */
-		m_x += 1 - 2*((float)rand()/RAND_MAX);
-	else
-		m_y += 1 - 2*((float)rand()/RAND_MAX);
-}
-
-float Individu::GetX()
-{
-	return m_x;
-}
-
-float Individu::GetY()
-{
-	return m_y;
+	if((i != 1 && i != 2 && i != 3) || (j != 1))
+	{
+		std::cout << "Erreur index GetWoh" << std::endl;
+		return -1;
+	}
+	
+	return m_woh[i-1];
 }
 
 float Individu::GetError()
 {
 	return m_error;
+}
+
+void Individu::ShowWeights()
+{
+	std::cout << "wih_11 : " << m_wih[0] << std::endl;
+	std::cout << "wih_12 : " << m_wih[1] << std::endl;
+	std::cout << "wih_13 : " << m_wih[2] << std::endl;
+	std::cout << "wih_21 : " << m_wih[3] << std::endl;
+	std::cout << "wih_22 : " << m_wih[4] << std::endl;
+	std::cout << "wih_23 : " << m_wih[5] << std::endl;
+	std::cout << "woh_11 : " << m_woh[0] << std::endl;
+	std::cout << "woh_21 : " << m_woh[1] << std::endl;
+	std::cout << "woh_31 : " << m_woh[2] << std::endl;
+}
+
+void Individu::SetWih(float wih, int i, int j)
+{
+	if((i != 1 && i != 2) || (j != 1 && j != 2 && j != 3))
+	{
+		std::cout << "Erreur index SetWih" << std::endl;
+	}
+	
+	m_wih[(i-1)*3+j-1] = wih;
+}
+
+void Individu::SetWoh(float woh, int i, int j)
+{
+	if((i != 1 && i != 2 && i != 3) || (j != 1))
+	{
+		std::cout << "Erreur index SetWoh" << std::endl;
+	}
+	
+	m_woh[i-1] = woh;
 }
 
 void Individu::SetError(float error)

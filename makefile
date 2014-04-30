@@ -1,9 +1,8 @@
-main : main.o Individu.o Equation.o
-	g++ -Wall -o main main.o Individu.o Equation.o
+main : main.o Individu.o
+	g++ -Wall -o main main.o Individu.o
 	
-main.o : main.cpp Individu.h Equation.h
+main.o : main.cpp Individu.h
 Individu.o : Individu.cpp Individu.h
-Equation.o : Equation.cpp Equation.h
 
 %.o : %.cpp
 	g++ -Wall -c $<
