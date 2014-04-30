@@ -4,26 +4,24 @@
 class Individu
 {
 	private:
-		float m_x;
-		float m_y;
-		float m_error; // somme des erreurs par rapport aux équations
+		float m_wih[6];
+		float m_woh[3];
+		float m_error;
 		
 	public:
 		Individu();
 		~Individu();
 		
-		Individu* Croisement(Individu *individu);
-		Individu* Clonage();
-		void Mutation();
-		
-		float GetX();
-		float GetY();
+		float GetWih(int i, int j);
+		float GetWoh(int i, int j);
 		float GetError();
+		void ShowWeights();
 		
+		void SetWih(float wih, int i, int j);
+		void SetWoh(float woh, int i, int j);
 		void SetError(float error);
 	
 	private:
-		Individu(float x, float y);
 		void Init();
 };
 
