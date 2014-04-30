@@ -24,7 +24,7 @@ void Individu::Init()
 		m_woh[i] = (float)rand()/RAND_MAX;
 	}
 	
-	m_error = 100;
+	m_error = 2;
 }
 
 float Individu::GetWih(int i, int j)
@@ -51,7 +51,7 @@ float Individu::GetWoh(int i, int j)
 
 float Individu::GetError()
 {
-	return m_error;
+	return (m_error <= 0.0000001 ? 0 : m_error);
 }
 
 void Individu::ShowWeights()
