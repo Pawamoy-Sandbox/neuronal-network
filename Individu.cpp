@@ -21,9 +21,9 @@ Individu::~Individu()
 
 void Individu::Init()
 {
-	int a = -1000;
-	int b = 1000;
-	/* réels entre -10 et 10 */
+	int a = 0;
+	int b = 1;
+	/* réels entre 0 et 1 */
 	m_x = (b-a)*((float)rand()/RAND_MAX) + a;
 	m_y = (b-a)*((float)rand()/RAND_MAX) + a;
 	
