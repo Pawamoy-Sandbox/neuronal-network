@@ -15,7 +15,7 @@ float Test(Individu &ind, const int In1, const int In2, const float vitesse)
 	for(int i = 0; i < 3; i++)
 	{
 		Hd[i] = In1*ind.GetWih(1, i+1) + In2*ind.GetWih(2, i+1);
-		Hd[i] > 0.5 ? Hd[i] = 1 : Hd[i] = 0;
+		Hd[i] >= 0.5 ? Hd[i] = 1 : Hd[i] = 0;
 		Out += Hd[i]*ind.GetWoh(i+1, 1);
 	}
 	
@@ -33,29 +33,64 @@ float Test(Individu &ind, const int In1, const int In2, const float vitesse)
 	return ind.GetError();
 }
 
+int Out(Individu &ind, const int In1, const int In2)
+{
+	float Hd[3];
+	float Out = 0;
+	
+	/* Calcul de Hd1, Hd2, Hd3, puis de Out */
+	for(int i = 0; i < 3; i++)
+	{
+		Hd[i] = In1*ind.GetWih(1, i+1) + In2*ind.GetWih(2, i+1);
+		Hd[i] >= 0.5 ? Hd[i] = 1 : Hd[i] = 0;
+		Out += Hd[i]*ind.GetWoh(i+1, 1);
+	}
+	
+	return (Out >= 0.5 ? 1 : 0);
+}
+
 int main(int argc, char *argv[])
 {
 	srand(time(NULL));
 	
 	Individu ind;
+	float vitesse = 0.1;
+	int it = 0, cycle = 100000;
 	
-	float vitesse = 0.5;
+	cout << "Poids de départ: " << std::endl;
+	ind.ShowWeights();
+	cout << std::endl;
 	
-	for(int i = 0; i < 10000; i++)
+	float error_sum = 1;
+	while (error_sum != 0)
 	{
-		Test(ind, 0, 0, vitesse);
-		Test(ind, 0, 1, vitesse);
-		Test(ind, 1, 0, vitesse);
-		Test(ind, 1, 1, vitesse);
+		//~ for (int i = 0; i < cycle; i++)
+		//~ {
+			//~ error_sum += Test(ind, 0, 0, vitesse);
+			//~ Test(ind, 0, 1, vitesse);
+			//~ Test(ind, 1, 0, vitesse);
+			//~ Test(ind, 1, 1, vitesse);
+		//~ }
+
+		error_sum = 0;
+		//~ error_sum += Test(ind, 0, 0, vitesse);
+		error_sum += Test(ind, 0, 1, vitesse);
+		error_sum += Test(ind, 1, 0, vitesse);
+		error_sum += Test(ind, 1, 1, vitesse);
+		
+		it++;
 	}
 	
+	cout << (it-1)*cycle+cycle << " itérations" << std::endl;
+	cout << "Poids d'arrivée: " << std::endl;
 	ind.ShowWeights();
-	cout << "Marge d'erreur : " << ind.GetError() << endl;
+	cout << std::endl;
 	
-	cout << Test(ind, 0, 0, vitesse) << endl;
-	cout << Test(ind, 0, 1, vitesse) << endl;;
-	cout << Test(ind, 1, 0, vitesse) << endl;;
-	cout << Test(ind, 1, 1, vitesse) << endl;;
+	cout << "Marge d'erreur : " << ind.GetError() << endl;
+	cout << "0,0: " << Out(ind, 0, 0) << endl;
+	cout << "0,1: " << Out(ind, 0, 1) << endl;;
+	cout << "1,0: " << Out(ind, 1, 0) << endl;;
+	cout << "1,1: " << Out(ind, 1, 1) << endl;;
 	
 	return 0;
 }
