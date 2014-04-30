@@ -1,8 +1,16 @@
 Individu : 6 poids in et 3 poids out
 4 épreuves à passer pour chaque Individu : 0,0 0,1 1,0 1,1
-Calcul du fitness en fonction des 2 entrées et de la sortie
 
-Questions :
-comment les poids modifient les entrées ? (multiplication ?)
+Exemple pour In1 = 1, In2 = 0, wih_11 = 0.3, wih_21 = 0.55 :
+Hd1 = 1*0.3 + 0*0.55 = 0.3, donc comme 0.3 < 0.5, Hd1 = 0.
+Faire pareil avec Hd2 et Hd3.
+Une fois qu'on a les valeurs pour Hd1, Hd2, Hd3, faire pareil avec les
+poids who :
+Out = Hd1*who_11 + Hd2*who_21 + Hd3*who_31
+Maintenant, apprentissage :
+si Out devrait être égal à 1, mais qu'il est égal à 0.86, marge d'erreur = 1 - 0.86 = 0.14
+Avec cette marge, je suppose qu'on change tous les poids wih et woh, comme ça :
+NouveauPoids = AncienPoids + (ValeurEntrée du poids * marge d'erreur * vitesse apprentissage)
+vitesse d'apprentissage c'est peut-être pas obligatoire.
 
 http://e-philo.univ-paris1.fr/TP1_CONX.htm
