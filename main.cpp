@@ -39,23 +39,56 @@ int main(int argc, char *argv[])
 	
 	Individu ind;
 	
-	float vitesse = 0.5;
-	
-	for(int i = 0; i < 10000; i++)
+	float vitesse = 0.4;
+
+	ind.SetError(100);
+	int a = 0;
+	while(ind.GetError() != 0)
 	{
 		Test(ind, 0, 0, vitesse);
-		Test(ind, 0, 1, vitesse);
-		Test(ind, 1, 0, vitesse);
-		Test(ind, 1, 1, vitesse);
+		a++;
 	}
 	
 	ind.ShowWeights();
-	cout << "Marge d'erreur : " << ind.GetError() << endl;
+	cout << a << endl;
+
+	ind.SetError(100);
+	a = 0;
+	while(ind.GetError() != 0)
+	{
+		Test(ind, 0, 1, vitesse);
+		a++;
+	}
 	
-	cout << Test(ind, 0, 0, vitesse) << endl;
-	cout << Test(ind, 0, 1, vitesse) << endl;;
-	cout << Test(ind, 1, 0, vitesse) << endl;;
-	cout << Test(ind, 1, 1, vitesse) << endl;;
+	ind.ShowWeights();
+	cout << a << endl;
+
+	ind.SetError(100);
+	a = 0;
+	while(ind.GetError() != 0)
+	{
+		Test(ind, 1, 0, vitesse);
+		a++;
+	}
+	
+	ind.ShowWeights();
+	cout << a << endl;
+
+	ind.SetError(100);
+	a = 0;
+	while(ind.GetError() != 0)
+	{
+		Test(ind, 1, 1, vitesse);
+		a++;
+	}
+	
+	ind.ShowWeights();
+	cout << a << endl;
+	
+	Test(ind, 0, 0, vitesse);
+	Test(ind, 0, 1, vitesse);
+	Test(ind, 1, 0, vitesse);
+	Test(ind, 1, 1, vitesse);
 	
 	return 0;
 }
