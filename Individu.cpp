@@ -14,14 +14,18 @@ Individu::~Individu()
 
 void Individu::Init()
 {	
+	int a = -10;
+	int b = 10;
+	/* réels entre -10 et 10 */
+	
 	for(int i = 0; i < 6; i++)
 	{
-		m_wih[i] = (float)rand()/RAND_MAX;
+		m_wih[i] = (b-a)*((float)rand()/RAND_MAX) + a;
 	}
 	
 	for(int i = 0; i < 3; i++)
 	{
-		m_woh[i] = (float)rand()/RAND_MAX;
+		m_woh[i] = (b-a)*((float)rand()/RAND_MAX) + a;
 	}
 	
 	m_error = 100;
@@ -89,5 +93,8 @@ void Individu::SetWoh(float woh, int i, int j)
 
 void Individu::SetError(float error)
 {
-	m_error = error;
+	if(error > -1.0e-5 && error < 1.0e-5)
+		m_error = 0;
+	else
+		m_error = error;
 }
