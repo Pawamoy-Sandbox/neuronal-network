@@ -47,3 +47,11 @@ Commentaires
 	1,0: 1
 	1,1: 0
 
+En affichant la marge d'erreur (valeur absolue) tous les 1M d'itérations,
+on s'aperçoit que parfois on tombe dans un cycle: le 1er test ne modifie pas les poids,
+le 2ème, 3ème et 4ème tests apportent des modifications qui retombent sur la configuration du 1er -> cycle...
+Parfois on a des cycles finis mais tout de même très grand: à chaque itération (les 4 -ou 3- tests)
+les poids modifiés tournent en rond sans jamais retomber sur la même valeur mais sans jamais changer suffisament
+pour apporter un déclic nécessaire à un meilleur apprentissage.
+
+Pour corriger ça, je pense qu'il faudrait introduire une toute petite mutation entre chaque itération !
