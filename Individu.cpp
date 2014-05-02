@@ -3,6 +3,8 @@
 
 #include "Individu.h"
 
+#define CLOSE_TO_ZERO 0.01
+
 Individu::Individu()
 {
 	Init();
@@ -51,7 +53,13 @@ float Individu::GetWoh(int i, int j)
 
 float Individu::GetError()
 {
-	return (m_error <= 0.1 && m_error >= -0.1 ? 0 : m_error);
+	return (m_error <= CLOSE_TO_ZERO && m_error >= -CLOSE_TO_ZERO ? 0 : m_error);
+}
+
+float Individu::GetPositiveError()
+{
+	float error = (m_error < 0 ? -m_error : m_error);
+	return (error <= CLOSE_TO_ZERO ? 0 : error);
 }
 
 void Individu::ShowWeights()
