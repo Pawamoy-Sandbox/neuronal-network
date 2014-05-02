@@ -15,6 +15,7 @@ class Individu
 		float GetWih(int i, int j);
 		float GetWoh(int i, int j);
 		float GetError();
+		float GetPositiveError();
 		void ShowWeights();
 		
 		void SetWih(float wih, int i, int j);

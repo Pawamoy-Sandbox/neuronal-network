@@ -30,7 +30,7 @@ float Test(Individu &ind, const int In1, const int In2, const float vitesse)
 		ind.SetWoh(ind.GetWoh(i+1, 1) + Hd[i]*ind.GetError()*vitesse, i+1, 1);
 	}
 	
-	return ind.GetError();
+	return ind.GetPositiveError();
 }
 
 float Out(Individu &ind, const int In1, const int In2)
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
 	ind.ShowWeights();
 	cout << std::endl;
 	
-	cout << "Marge d'erreur : " << ind.GetError() << endl;
+	cout << "Marge d'erreur : " << error_sum << endl;
 	cout << "0,0: " << Out(ind, 0, 0) << endl;
 	cout << "0,1: " << Out(ind, 0, 1) << endl;;
 	cout << "1,0: " << Out(ind, 1, 0) << endl;;
