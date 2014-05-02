@@ -56,23 +56,32 @@ int main(int argc, char *argv[])
 	
 	Individu ind;
 	float vitesse = 0.1;
-	int it = 0;
+	int i, it = 0;
 	
 	cout << "Poids de départ: " << std::endl;
 	ind.ShowWeights();
 	cout << std::endl;
 	
 	float error_sum = 1;
-	while (error_sum != 0)
+	while (true)
 	{
-		error_sum = 0;
-		//~ error_sum += Test(ind, 0, 0, vitesse);
-		error_sum += Test(ind, 0, 1, vitesse);
-		error_sum += Test(ind, 1, 0, vitesse);
-		error_sum += Test(ind, 1, 1, vitesse);
+		i = 0;
 		
-		it++;
-		if (it>=10000000) break;
+		while (error_sum != 0)
+		{
+			error_sum = 0;
+			error_sum += Test(ind, 0, 0, vitesse);
+			error_sum += Test(ind, 0, 1, vitesse);
+			error_sum += Test(ind, 1, 0, vitesse);
+			error_sum += Test(ind, 1, 1, vitesse);
+			
+			i++;
+			if (i>=1000000) break;
+		}
+		
+		it += i;
+		if (error_sum == 0) break;
+		cout << "Marge d'erreur: " << error_sum << endl;
 	}
 	
 	cout << it << " itérations" << std::endl;
@@ -80,7 +89,7 @@ int main(int argc, char *argv[])
 	ind.ShowWeights();
 	cout << std::endl;
 	
-	cout << "Marge d'erreur : " << error_sum << endl;
+	cout << "Marge d'erreur: " << error_sum << endl;
 	cout << "0,0: " << Out(ind, 0, 0) << endl;
 	cout << "0,1: " << Out(ind, 0, 1) << endl;;
 	cout << "1,0: " << Out(ind, 1, 0) << endl;;
