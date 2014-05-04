@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 		while (error_sum != 0)
 		{
 			/* Mutation */
-			if((float)rand()/RAND_MAX < pm)
+			if ((float)rand()/RAND_MAX < pm)
 				ind.Mutate();
 			
 			error_sum = 0;
