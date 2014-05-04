@@ -7,7 +7,7 @@
 
 using namespace std;
 
-float Test(Individu &ind, const int In1, const int In2, const float vitesse)
+float Learn(Individu &ind, const int In1, const int In2, const float vitesse)
 {
 	float Hd[3];
 	float Out = 0;
@@ -84,6 +84,7 @@ int main(int argc, char *argv[])
 	ind.ShowWeights();
 	cout << endl;
 
+/* ---------------- Boucle d'apprentissage ! ---------------- */
 	while (it<NB_CYCLE*CYCLE)
 	{
 		int i = 0;
@@ -94,10 +95,10 @@ int main(int argc, char *argv[])
 				ind.Mutate();
 			
 			error_sum = 0;
-			//~ error_sum += Test(ind, 0, 0, vitesse); // ne change jamais les poids
-			error_sum += Test(ind, 0, 1, vitesse);
-			error_sum += Test(ind, 1, 0, vitesse);
-			error_sum += Test(ind, 1, 1, vitesse);
+			//~ error_sum += Learn(ind, 0, 0, vitesse); // ne change jamais les poids
+			error_sum += Learn(ind, 0, 1, vitesse);
+			error_sum += Learn(ind, 1, 0, vitesse);
+			error_sum += Learn(ind, 1, 1, vitesse);
 			
 			i++;
 			if (i>=CYCLE) break;
@@ -109,6 +110,7 @@ int main(int argc, char *argv[])
 		else
 			cout << "Marge d'erreur (" << it/CYCLE << " cycles):\t" << error_sum << endl;
 	}
+/* ---------------- Fin boucle d'apprentissage ! ---------------- */
 	
 	if (it > CYCLE) cout << endl;
 	cout << "Poids trouvés après " << it << " itérations" << std::endl;
