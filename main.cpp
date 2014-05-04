@@ -47,12 +47,6 @@ float Out(Individu &ind, const int In1, const int In2)
 		Out += Hd[i]*ind.GetWoh(i+1, 1);
 	}
 	
-	//~ if(Out <= CLOSE_TO_ZERO && Out >= -CLOSE_TO_ZERO) // très proche de 0
-		//~ return 0;
-	//~ else if(Out <= (1 + CLOSE_TO_ZERO) && Out >= (1 - CLOSE_TO_ZERO)) // très proche de 1
-		//~ return 1;
-	//~ else
-		//~ return Out;
 	return (Out < 0.5 ? 0 : 1);
 }
 
