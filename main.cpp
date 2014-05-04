@@ -64,8 +64,7 @@ int main(int argc, char *argv[])
 	float vitesse; // vitesse d'apprentissage
 	float pm; // probabilité de mutation
 	float error_sum = 1; // somme des erreurs des 4 tests
-	int i, it = 0; // nombre d'itérations
-	int out1, out2, out3, out4;
+	int it = 0; // nombre d'itérations
 	
 	if(argc != 3) // valeurs par défaut
 	{
@@ -93,7 +92,7 @@ int main(int argc, char *argv[])
 
 	while (it<NB_CYCLE*CYCLE)
 	{
-		i = 0;
+		int i = 0;
 		while (error_sum != 0)
 		{
 			/* Mutation */
@@ -125,19 +124,10 @@ int main(int argc, char *argv[])
 	cout << "Marge d'erreur du dernier test: " << ind.GetExactError() << endl;
 	cout << "Sortie pour chaque couple d'entrées avec les poids trouvés: " << endl;
 
-	i = 0;
-	if ((out1 = Out(ind, 0, 0)) == 0) i++;
-	if ((out2 = Out(ind, 0, 1)) == 1) i++;
-	if ((out3 = Out(ind, 1, 0)) == 1) i++;
-	if ((out4 = Out(ind, 1, 1)) == 0) i++;
-	
-	cout << "  0,0: " << out1 << endl;
-	cout << "  0,1: " << out2 << endl;
-	cout << "  1,0: " << out3 << endl;
-	cout << "  1,1: " << out4 << endl;
-	cout << endl;
-	
-	cout << "Pourcentage de réussite: " << i*25 << "%" << endl;
+	cout << "  0,0: " << Out(ind, 0, 0) << endl;
+	cout << "  0,1: " << Out(ind, 0, 1) << endl;
+	cout << "  1,0: " << Out(ind, 1, 0) << endl;
+	cout << "  1,1: " << Out(ind, 1, 1) << endl;
 	
 	return 0;
 }
