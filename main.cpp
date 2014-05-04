@@ -69,6 +69,8 @@ int main(int argc, char *argv[])
 		
 		while (error_sum != 0)
 		{
+			ind.Mutate();
+			
 			error_sum = 0;
 			error_sum += Test(ind, 0, 0, vitesse);
 			error_sum += Test(ind, 0, 1, vitesse);
