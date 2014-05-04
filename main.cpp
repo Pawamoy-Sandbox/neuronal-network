@@ -47,8 +47,12 @@ float Out(Individu &ind, const int In1, const int In2)
 		Out += Hd[i]*ind.GetWoh(i+1, 1);
 	}
 	
-	return (Out >= 0.5 ? 1 : 0);
-	//~ return Out;
+	if(Out <= CLOSE_TO_ZERO && Out >= -CLOSE_TO_ZERO) // très proche de 0
+		return 0;
+	else if(Out <= (1 + CLOSE_TO_ZERO) && Out >= (1 - CLOSE_TO_ZERO)) // très proche de 1
+		return 1;
+	else
+		return Out;
 }
 
 int main(int argc, char *argv[])
@@ -56,11 +60,23 @@ int main(int argc, char *argv[])
 	srand(time(NULL));
 	
 	Individu ind;
-	float vitesse = 0.1;
-	float error_sum = 1;
-	int i, it = 0;
+	float vitesse; // vitesse d'apprentissage
+	float pm; // probabilité de mutation
+	float error_sum = 1; // somme des erreurs des 4 tests
+	int i, it = 0; // nombre d'itérations
+	
+	if(argc != 3) // valeurs par défaut
+	{
+		vitesse = 0.1;
+		pm = 0.8;
+	}
+	else // usage: ./main vitesse pm
+	{
+		vitesse = atof(argv[1]);
+		pm = atof(argv[2]);
+	}
+	
 	int out1, out2, out3, out4;
-	bool mutate = true;
 	
 	cout << "Initialisation: " << endl;
 	cout << "  Considéré comme égal à zéro: [" << -CLOSE_TO_ZERO << ", " << CLOSE_TO_ZERO << "]" << endl;
@@ -72,18 +88,15 @@ int main(int argc, char *argv[])
 	cout << "Poids de départ: " << endl;
 	ind.ShowWeights();
 	cout << endl;
-	
-	if (argc > 1)
-		if (strcmp(argv[1], "--no-mutation") == 0)
-			mutate = false;
-	
+
 	while (it<NB_CYCLE*CYCLE)
 	{
 		i = 0;
-		
 		while (error_sum != 0)
 		{
-			if (mutate) ind.Mutate();
+			/* Mutation */
+			if((float)rand()/RAND_MAX < pm)
+				ind.Mutate();
 			
 			error_sum = 0;
 			//~ error_sum += Test(ind, 0, 0, vitesse);
@@ -96,14 +109,16 @@ int main(int argc, char *argv[])
 		}
 		
 		it += i;
-		if (error_sum == 0) break;
-		cout << "Marge d'erreur (" << it/CYCLE << "M):\t" << error_sum << endl;
+		if (error_sum == 0)
+			break;
+		else
+			cout << "Marge d'erreur (" << it/CYCLE << "M):\t" << error_sum << endl;
 	}
 	
 	if (it > CYCLE) cout << endl;
 	cout << "Poids trouvés après " << it << " itérations" << std::endl;
 	ind.ShowWeights();
-	cout << std::endl;
+	cout << endl;
 	
 	cout << "Marge d'erreur du dernier test: " << ind.GetExactError() << endl;
 	cout << "Sortie pour chaque couple d'entrées avec les poids trouvés: " << endl;
