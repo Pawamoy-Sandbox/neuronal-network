@@ -47,12 +47,13 @@ float Out(Individu &ind, const int In1, const int In2)
 		Out += Hd[i]*ind.GetWoh(i+1, 1);
 	}
 	
-	if(Out <= CLOSE_TO_ZERO && Out >= -CLOSE_TO_ZERO) // très proche de 0
-		return 0;
-	else if(Out <= (1 + CLOSE_TO_ZERO) && Out >= (1 - CLOSE_TO_ZERO)) // très proche de 1
-		return 1;
-	else
-		return Out;
+	//~ if(Out <= CLOSE_TO_ZERO && Out >= -CLOSE_TO_ZERO) // très proche de 0
+		//~ return 0;
+	//~ else if(Out <= (1 + CLOSE_TO_ZERO) && Out >= (1 - CLOSE_TO_ZERO)) // très proche de 1
+		//~ return 1;
+	//~ else
+		//~ return Out;
+	return (Out < 0.5 ? 0 : 1);
 }
 
 int main(int argc, char *argv[])
@@ -82,6 +83,8 @@ int main(int argc, char *argv[])
 	cout << "  Intervalle de mutation: [" << LO << ", " << HI << "]" << endl;
 	cout << "  Nombre d'itérations dans un cycle: " << CYCLE << endl;
 	cout << "  Nombre de cycles dans la boucle: " << NB_CYCLE << endl;
+	cout << "  Vitesse d'apprentissage: " << vitesse << endl;
+	cout << "  Probabilité de mutation: " << pm << endl;
 	cout << endl;
 	
 	cout << "Poids de départ: " << endl;

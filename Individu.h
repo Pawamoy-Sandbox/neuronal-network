@@ -1,7 +1,7 @@
 #ifndef __INDIVIDU_H__
 #define __INDIVIDU_H__
 
-#define CLOSE_TO_ZERO 0.00001
+#define CLOSE_TO_ZERO 0.0001
 #define LO -0.1
 #define HI 0.1
 #define CYCLE 1000000
