@@ -64,6 +64,7 @@ int main(int argc, char *argv[])
 	float pm; // probabilité de mutation
 	float error_sum = 1; // somme des erreurs des 4 tests
 	int i, it = 0; // nombre d'itérations
+	int out1, out2, out3, out4;
 	
 	if(argc != 3) // valeurs par défaut
 	{
@@ -75,8 +76,6 @@ int main(int argc, char *argv[])
 		vitesse = atof(argv[1]);
 		pm = atof(argv[2]);
 	}
-	
-	int out1, out2, out3, out4;
 	
 	cout << "Initialisation: " << endl;
 	cout << "  Considéré comme égal à zéro: [" << -CLOSE_TO_ZERO << ", " << CLOSE_TO_ZERO << "]" << endl;
@@ -99,7 +98,7 @@ int main(int argc, char *argv[])
 				ind.Mutate();
 			
 			error_sum = 0;
-			//~ error_sum += Test(ind, 0, 0, vitesse);
+			//~ error_sum += Test(ind, 0, 0, vitesse); // ne change jamais les poids
 			error_sum += Test(ind, 0, 1, vitesse);
 			error_sum += Test(ind, 1, 0, vitesse);
 			error_sum += Test(ind, 1, 1, vitesse);
@@ -122,17 +121,12 @@ int main(int argc, char *argv[])
 	
 	cout << "Marge d'erreur du dernier test: " << ind.GetExactError() << endl;
 	cout << "Sortie pour chaque couple d'entrées avec les poids trouvés: " << endl;
-	
-	out1 = Out(ind, 0, 0);
-	out2 = Out(ind, 0, 1);
-	out3 = Out(ind, 1, 0);
-	out4 = Out(ind, 1, 1);
-	
+
 	i = 0;
-	if (Out(ind, 0, 0) == 0) i++;
-	if (Out(ind, 0, 1) == 1) i++;
-	if (Out(ind, 1, 0) == 1) i++;
-	if (Out(ind, 1, 1) == 0) i++;
+	if ((out1 = Out(ind, 0, 0)) == 0) i++;
+	if ((out2 = Out(ind, 0, 1)) == 1) i++;
+	if ((out3 = Out(ind, 1, 0)) == 1) i++;
+	if ((out4 = Out(ind, 1, 1)) == 0) i++;
 	
 	cout << "  0,0: " << out1 << endl;
 	cout << "  0,1: " << out2 << endl;
