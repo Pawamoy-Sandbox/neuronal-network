@@ -3,10 +3,6 @@
 
 #include "Individu.h"
 
-#define CLOSE_TO_ZERO 0.01
-#define LO -0.1
-#define HI 0.1
-
 Individu::Individu()
 {
 	Init();
@@ -68,6 +64,11 @@ float Individu::GetWoh(int i, int j)
 	return m_woh[i-1];
 }
 
+float Individu::GetExactError()
+{
+	return m_error;
+}
+
 float Individu::GetError()
 {
 	return (m_error <= CLOSE_TO_ZERO && m_error >= -CLOSE_TO_ZERO ? 0 : m_error);
@@ -81,15 +82,12 @@ float Individu::GetPositiveError()
 
 void Individu::ShowWeights()
 {
-	std::cout << "wih_11 : " << m_wih[0] << std::endl;
-	std::cout << "wih_12 : " << m_wih[1] << std::endl;
-	std::cout << "wih_13 : " << m_wih[2] << std::endl;
-	std::cout << "wih_21 : " << m_wih[3] << std::endl;
-	std::cout << "wih_22 : " << m_wih[4] << std::endl;
-	std::cout << "wih_23 : " << m_wih[5] << std::endl;
-	std::cout << "woh_11 : " << m_woh[0] << std::endl;
-	std::cout << "woh_21 : " << m_woh[1] << std::endl;
-	std::cout << "woh_31 : " << m_woh[2] << std::endl;
+	std::cout << "  wih_11: " << m_wih[0] << "\twoh_11: " << m_woh[0] << std::endl;
+	std::cout << "  wih_12: " << m_wih[1] << "\twoh_21: " << m_woh[1] << std::endl;
+	std::cout << "  wih_13: " << m_wih[2] << "\twoh_31: " << m_woh[2] << std::endl;
+	std::cout << "  wih_21: " << m_wih[3] << std::endl;
+	std::cout << "  wih_22: " << m_wih[4] << std::endl;
+	std::cout << "  wih_23: " << m_wih[5] << std::endl;
 }
 
 void Individu::SetWih(float wih, int i, int j)

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <vector>
+#include <string.h>
 
 #include "Individu.h"
 
@@ -56,46 +57,75 @@ int main(int argc, char *argv[])
 	
 	Individu ind;
 	float vitesse = 0.1;
-	int i, it = 0;
-	
-	cout << "Poids de départ: " << std::endl;
-	ind.ShowWeights();
-	cout << std::endl;
-	
 	float error_sum = 1;
-	while (true)
+	int i, it = 0;
+	int out1, out2, out3, out4;
+	bool mutate = true;
+	
+	cout << "Initialisation: " << endl;
+	cout << "  Considéré comme égal à zéro: [" << -CLOSE_TO_ZERO << ", " << CLOSE_TO_ZERO << "]" << endl;
+	cout << "  Intervalle de mutation: [" << LO << ", " << HI << "]" << endl;
+	cout << "  Nombre d'itérations dans un cycle: " << CYCLE << endl;
+	cout << "  Nombre de cycles dans la boucle: " << NB_CYCLE << endl;
+	cout << endl;
+	
+	cout << "Poids de départ: " << endl;
+	ind.ShowWeights();
+	cout << endl;
+	
+	if (argc > 1)
+		if (strcmp(argv[1], "--no-mutation") == 0)
+			mutate = false;
+	
+	while (it<NB_CYCLE*CYCLE)
 	{
 		i = 0;
 		
 		while (error_sum != 0)
 		{
-			ind.Mutate();
+			if (mutate) ind.Mutate();
 			
 			error_sum = 0;
-			error_sum += Test(ind, 0, 0, vitesse);
+			//~ error_sum += Test(ind, 0, 0, vitesse);
 			error_sum += Test(ind, 0, 1, vitesse);
 			error_sum += Test(ind, 1, 0, vitesse);
 			error_sum += Test(ind, 1, 1, vitesse);
 			
 			i++;
-			if (i>=1000000) break;
+			if (i>=CYCLE) break;
 		}
 		
 		it += i;
 		if (error_sum == 0) break;
-		cout << "Marge d'erreur: " << error_sum << endl;
+		cout << "Marge d'erreur (" << it/CYCLE << "M):\t" << error_sum << endl;
 	}
 	
-	cout << it << " itérations" << std::endl;
-	cout << "Poids d'arrivée: " << std::endl;
+	if (it > CYCLE) cout << endl;
+	cout << "Poids trouvés après " << it << " itérations" << std::endl;
 	ind.ShowWeights();
 	cout << std::endl;
 	
-	cout << "Marge d'erreur: " << error_sum << endl;
-	cout << "0,0: " << Out(ind, 0, 0) << endl;
-	cout << "0,1: " << Out(ind, 0, 1) << endl;;
-	cout << "1,0: " << Out(ind, 1, 0) << endl;;
-	cout << "1,1: " << Out(ind, 1, 1) << endl;;
+	cout << "Marge d'erreur du dernier test: " << ind.GetExactError() << endl;
+	cout << "Sortie pour chaque couple d'entrées avec les poids trouvés: " << endl;
+	
+	out1 = Out(ind, 0, 0);
+	out2 = Out(ind, 0, 1);
+	out3 = Out(ind, 1, 0);
+	out4 = Out(ind, 1, 1);
+	
+	i = 0;
+	if (Out(ind, 0, 0) == 0) i++;
+	if (Out(ind, 0, 1) == 1) i++;
+	if (Out(ind, 1, 0) == 1) i++;
+	if (Out(ind, 1, 1) == 0) i++;
+	
+	cout << "  0,0: " << out1 << endl;
+	cout << "  0,1: " << out2 << endl;
+	cout << "  1,0: " << out3 << endl;
+	cout << "  1,1: " << out4 << endl;
+	cout << endl;
+	
+	cout << "Pourcentage de réussite: " << i*25 << "%" << endl;
 	
 	return 0;
 }
