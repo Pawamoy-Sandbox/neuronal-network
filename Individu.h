@@ -1,6 +1,12 @@
 #ifndef __INDIVIDU_H__
 #define __INDIVIDU_H__
 
+#define CLOSE_TO_ZERO 0.00001
+#define LO -0.1
+#define HI 0.1
+#define CYCLE 1000000
+#define NB_CYCLE 20
+
 class Individu
 {
 	private:
@@ -14,6 +20,7 @@ class Individu
 		
 		float GetWih(int i, int j);
 		float GetWoh(int i, int j);
+		float GetExactError();
 		float GetError();
 		float GetPositiveError();
 		void ShowWeights();
