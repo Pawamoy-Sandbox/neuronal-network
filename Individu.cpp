@@ -4,6 +4,8 @@
 #include "Individu.h"
 
 #define CLOSE_TO_ZERO 0.01
+#define LO -0.1
+#define HI 0.1
 
 Individu::Individu()
 {
@@ -27,6 +29,21 @@ void Individu::Init()
 	}
 	
 	m_error = 2;
+}
+
+void Individu::Mutate()
+{
+	float mutation;
+	
+	for (int i=0; i<3; i++)
+	{
+		mutation = LO + (float)(rand()) / ((float)(RAND_MAX / (HI-LO)));
+		SetWih(GetWih(1, i+1) + mutation, 1, i+1);
+		mutation = LO + (float)(rand()) / ((float)(RAND_MAX / (HI-LO)));
+		SetWih(GetWih(2, i+1) + mutation, 2, i+1);
+		mutation = LO + (float)(rand()) / ((float)(RAND_MAX / (HI-LO)));
+		SetWoh(GetWoh(i+1, 1) + mutation, i+1, 1);
+	}
 }
 
 float Individu::GetWih(int i, int j)
