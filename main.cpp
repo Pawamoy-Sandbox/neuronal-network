@@ -62,8 +62,8 @@ int main(int argc, char *argv[])
 	
 	if(argc != 3) // valeurs par défaut
 	{
-		vitesse = 0.1;
-		pm = 0.8;
+		vitesse = 0.4;
+		pm = 0.4;
 	}
 	else // usage: ./main vitesse pm
 	{
