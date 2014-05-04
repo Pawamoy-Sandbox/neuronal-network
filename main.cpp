@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
 		if (error_sum == 0)
 			break;
 		else
-			cout << "Marge d'erreur (" << it/CYCLE << "M):\t" << error_sum << endl;
+			cout << "Marge d'erreur (" << it/CYCLE << " cycles):\t" << error_sum << endl;
 	}
 	
 	if (it > CYCLE) cout << endl;
