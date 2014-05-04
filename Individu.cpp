@@ -31,7 +31,7 @@ void Individu::Mutate()
 {
 	float mutation;
 	
-	for (int i=0; i<3; i++)
+	for(int i = 0; i < 3; i++)
 	{
 		mutation = LO + (float)(rand()) / ((float)(RAND_MAX / (HI-LO)));
 		SetWih(GetWih(1, i+1) + mutation, 1, i+1);
