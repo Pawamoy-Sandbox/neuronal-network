@@ -5,6 +5,8 @@
 
 #include "Individu.h"
 
+#define OP ^
+
 using namespace std;
 
 float Learn(Individu &ind, const int In1, const int In2, const float vitesse)
@@ -21,7 +23,7 @@ float Learn(Individu &ind, const int In1, const int In2, const float vitesse)
 	}
 	
 	/* Calcul de la marge d'erreur */
-	ind.SetError((In1 ^ In2) - Out);
+	ind.SetError((In1 OP In2) - Out);
 	
 	/* Mise à jour des poids */
 	for(int i = 0; i < 3; i++)
@@ -34,7 +36,7 @@ float Learn(Individu &ind, const int In1, const int In2, const float vitesse)
 	return ind.GetPositiveError();
 }
 
-float Out(Individu &ind, const int In1, const int In2)
+float Check(Individu &ind, const int In1, const int In2)
 {
 	float Hd[3];
 	float Out = 0;
@@ -47,7 +49,24 @@ float Out(Individu &ind, const int In1, const int In2)
 		Out += Hd[i]*ind.GetWoh(i+1, 1);
 	}
 	
+	Out = (In1 OP In2) - Out;
+	return (Out < 0 ? -Out : Out);
+}
+
+float Out(Individu &ind, const int In1, const int In2)
+{
+	float Out = Check(ind, In1, In2);
 	return (Out < 0.5 ? 0 : 1);
+}
+
+float ErrorSum(Individu &ind)
+{
+	float sum = 0;
+	sum += Check(ind, 0, 0);
+	sum += Check(ind, 1, 1);
+	sum += Check(ind, 0, 1);
+	sum += Check(ind, 1, 0);
+	return sum;
 }
 
 int main(int argc, char *argv[])
@@ -94,11 +113,25 @@ int main(int argc, char *argv[])
 			if ((float)rand()/RAND_MAX < pm)
 				ind.Mutate();
 			
-			error_sum = 0;
-			//~ error_sum += Learn(ind, 0, 0, vitesse); // ne change jamais les poids
-			error_sum += Learn(ind, 0, 1, vitesse);
-			error_sum += Learn(ind, 1, 0, vitesse);
-			error_sum += Learn(ind, 1, 1, vitesse);
+			switch (rand()%4)
+			{
+				case 0:
+					//~ Learn(ind, 0, 0, vitesse);
+					//~ error_sum = ErrorSum(ind);
+					break;
+				case 1:
+					Learn(ind, 0, 1, vitesse);
+					error_sum = ErrorSum(ind);
+					break;
+				case 2:
+					Learn(ind, 1, 0, vitesse);
+					error_sum = ErrorSum(ind);
+					break;
+				case 3:
+					Learn(ind, 1, 1, vitesse);
+					error_sum = ErrorSum(ind);
+					break;
+			}
 			
 			i++;
 			if (i>=CYCLE) break;
