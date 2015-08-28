@@ -8,6 +8,19 @@ Individu::Individu()
 	Init();
 }
 
+Individu::Individu(float wih[6], float woh[3])
+{
+	for(int i = 0; i < 6; i++)
+	{
+		m_wih[i] = wih[i];
+	}
+	
+	for(int i = 0; i < 3; i++)
+	{
+		m_woh[i] = woh[i];
+	}
+}
+
 Individu::~Individu()
 {
 }
@@ -16,12 +29,12 @@ void Individu::Init()
 {	
 	for(int i = 0; i < 6; i++)
 	{
-		m_wih[i] = (float)rand()/RAND_MAX;
+		m_wih[i] = 2*((float)rand()/RAND_MAX) - 1;
 	}
 	
 	for(int i = 0; i < 3; i++)
 	{
-		m_woh[i] = (float)rand()/RAND_MAX;
+		m_woh[i] = 2*((float)rand()/RAND_MAX) - 1;
 	}
 	
 	m_error = 2;
@@ -31,14 +44,31 @@ void Individu::Mutate()
 {
 	float mutation;
 	
-	for(int i = 0; i < 3; i++)
+	switch(rand()%3)
 	{
-		mutation = LO + (float)(rand()) / ((float)(RAND_MAX / (HI-LO)));
-		SetWih(GetWih(1, i+1) + mutation, 1, i+1);
-		mutation = LO + (float)(rand()) / ((float)(RAND_MAX / (HI-LO)));
-		SetWih(GetWih(2, i+1) + mutation, 2, i+1);
-		mutation = LO + (float)(rand()) / ((float)(RAND_MAX / (HI-LO)));
-		SetWoh(GetWoh(i+1, 1) + mutation, i+1, 1);
+		case 0:
+		for(int i = 0; i < 3; i++)
+		{
+			mutation = LO + (float)(rand()) / ((float)(RAND_MAX / (HI-LO)));
+			SetWih(GetWih(1, i+1) + mutation, 1, i+1);
+		}
+		break;
+		
+		case 1:
+		for(int i = 0; i < 3; i++)
+		{
+			mutation = LO + (float)(rand()) / ((float)(RAND_MAX / (HI-LO)));
+			SetWih(GetWih(2, i+1) + mutation, 2, i+1);
+		}
+		break;
+		
+		case 2:
+		for(int i = 0; i < 3; i++)
+		{
+			mutation = LO + (float)(rand()) / ((float)(RAND_MAX / (HI-LO)));
+			SetWoh(GetWoh(i+1, 1) + mutation, i+1, 1);
+		}
+		break;
 	}
 }
 
@@ -64,20 +94,19 @@ float Individu::GetWoh(int i, int j)
 	return m_woh[i-1];
 }
 
-float Individu::GetExactError()
+float Individu::GetWih(int i)
 {
-	return m_error;
+	return m_wih[i];
+}
+
+float Individu::GetWoh(int i)
+{
+	return m_woh[i];
 }
 
 float Individu::GetError()
 {
 	return (m_error <= CLOSE_TO_ZERO && m_error >= -CLOSE_TO_ZERO ? 0 : m_error);
-}
-
-float Individu::GetPositiveError()
-{
-	float error = (m_error < 0 ? -m_error : m_error);
-	return (error <= CLOSE_TO_ZERO ? 0 : error);
 }
 
 void Individu::ShowWeights()
@@ -113,4 +142,26 @@ void Individu::SetWoh(float woh, int i, int j)
 void Individu::SetError(float error)
 {
 	m_error = error;
+}
+
+Individu* Individu::Croisement(Individu *individu)
+{
+	float wih[6], woh[3];
+	
+	for(int i = 0; i < 6; i++)
+	{
+		wih[i] = (rand() % 2 == 0) ? m_wih[i] : individu->GetWih(i);
+	}
+	
+	for(int i = 0; i < 3; i++)
+	{
+		woh[i] = (rand() % 2 == 0) ? m_woh[i] : individu->GetWoh(i);
+	}
+	
+	return new Individu(wih, woh);
+}
+
+Individu* Individu::Clonage()
+{
+	return new Individu(m_wih, m_woh);
 }

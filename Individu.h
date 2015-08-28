@@ -1,11 +1,9 @@
 #ifndef __INDIVIDU_H__
 #define __INDIVIDU_H__
 
-#define CLOSE_TO_ZERO 0.0001
-#define LO -1
-#define HI 1
-#define CYCLE 1000000
-#define NB_CYCLE 20
+#define CLOSE_TO_ZERO 0.00001
+#define LO -0.1
+#define HI 0.1
 
 class Individu
 {
@@ -16,14 +14,17 @@ class Individu
 		
 	public:
 		Individu();
+		Individu(float wih[6], float woh[3]);
 		~Individu();
 		
 		float GetWih(int i, int j);
 		float GetWoh(int i, int j);
-		float GetExactError();
+		float GetWih(int i);
+		float GetWoh(int i);
 		float GetError();
-		float GetPositiveError();
 		void ShowWeights();
+		Individu* Croisement(Individu *individu);
+		Individu* Clonage();
 		void Mutate();
 		
 		void SetWih(float wih, int i, int j);
