@@ -1,0 +1,25 @@
+Hl 4 2 0
+CONNECT IN 1 TO HL 1 1
+connect in 2 to hl 1 1
+CoNnEct In 3 To Hl 1 1
+Connect In 1 To Hl 1 2
+Connect In 2 To Hl 1 2
+Connect In 3 To Hl 1 2
+Connect In 1 To Hl 1 3
+Connect In 2 To Hl 1 3
+Connect In 3 To Hl 1 4
+Connect In 1 To Hl 1 4
+Connect In 2 To Hl 1 4
+Connect In 3 To Hl 1 4
+
+Connect Hl 1 1 To Hl 2 1
+Connect Hl 1 1 To Hl 2 2
+Connect Hl 1 2 To Hl 2 1
+Connect Hl 1 2 To Hl 2 2
+Connect Hl 1 3 To Hl 2 1
+Connect Hl 1 3 To Hl 2 2
+Connect Hl 1 4 To Hl 2 1
+Connect Hl 1 4 To Hl 2 2
+
+Connect Hl 2 1 To Out 1
+Connect Hl 2 2 To Out 1
